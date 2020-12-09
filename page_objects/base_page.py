@@ -1,5 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 
 class BasePage(object):
@@ -16,3 +17,8 @@ class BasePage(object):
 
     def wait_for_elements(self, locator, timeout=10):
         return WebDriverWait(self.driver, timeout).until(lambda driver: driver.find_elements(*locator))
+
+    def scroll_to_element(self, locator, xoffset=0, yoffset=0):
+        actions = ActionChains(self.driver)
+        actions.move_to_element_with_offset(self.wait_element_clicable(locator), xoffset=xoffset, yoffset=yoffset)
+        actions.perform()
